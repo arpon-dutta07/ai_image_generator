@@ -95,40 +95,37 @@ const ImageGenerator = () => {
         </nav>
       </header>
 
-      {/* Main Content */}
-      <div className='ai-image-generator' id="home">
+      {/* Hero Section with 3D Background */}
+      <div className='hero-section' id="home">
         {/* 3D Spline Background */}
         <div className="spline-background">
           <spline-viewer url="https://prod.spline.design/Ha5C9fVoAD3Tkzsm/scene.splinecode"></spline-viewer>
-          <div className="spline-overlay"></div>
         </div>
         
-        {/* Hero Decorative Elements */}
-        <div className="hero-decorations">
-          <div className="deco-circle deco-1"></div>
-          <div className="deco-circle deco-2"></div>
-          <div className="deco-triangle deco-3"></div>
-          <div className="deco-square deco-4"></div>
-        </div>
-        
-        <div className='header' data-text="AI IMAGE GENERATOR">
-          <span className="word-ai" style={{'--i': 0}}>AI</span>{' '}
-          <span className="word-image" style={{'--i': 1}}>IMAGE</span>{' '}
-          <span className="word-generator" style={{'--i': 2}}>GENERATOR</span>
-        </div>
-        
-        {/* Hero Subtitle */}
-        <div className="hero-subtitle">
-          <p className="subtitle-text">
-            Transform your imagination into stunning visuals with the power of artificial intelligence
-          </p>
-          <div className="subtitle-highlights">
-            <span className="highlight">✨ Unlimited Creativity</span>
-            <span className="highlight">🚀 Instant Results</span>
-            <span className="highlight">🎨 Professional Quality</span>
+        {/* Hero Content */}
+        <div className="hero-content">
+          <div className='header' data-text="AI IMAGE GENERATOR">
+            <span className="word-ai" style={{'--i': 0}}>AI</span>{' '}
+            <span className="word-image" style={{'--i': 1}}>IMAGE</span>{' '}
+            <span className="word-generator" style={{'--i': 2}}>GENERATOR</span>
+          </div>
+          
+          {/* Hero Subtitle */}
+          <div className="hero-subtitle">
+            <p className="subtitle-text">
+              Transform your imagination into stunning visuals with the power of artificial intelligence
+            </p>
+            <div className="subtitle-highlights">
+              <span className="highlight">✨ Unlimited Creativity</span>
+              <span className="highlight">🚀 Instant Results</span>
+              <span className="highlight">🎨 Professional Quality</span>
+            </div>
           </div>
         </div>
-        
+      </div>
+
+      {/* Main Generator Section */}
+      <div className='ai-image-generator'>
         <div className='img-loading'>
           <div className='image'> 
             <img 
