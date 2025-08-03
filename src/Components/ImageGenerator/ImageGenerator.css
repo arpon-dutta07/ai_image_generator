@@ -387,7 +387,7 @@ body::after {
 /* Main Header Styles - Modern Futuristic Font */
 .header {
     font-size: clamp(48px, 10vw, 100px);
-    font-family: 'Orbitron', 'Rajdhani', 'Exo 2', 'Space Mono', monospace;
+    font-family: 'Poppins', 'Montserrat', 'Inter', 'Helvetica Neue', sans-serif;
     font-weight: 700;
     text-align: center;
     color: #ffffff;
