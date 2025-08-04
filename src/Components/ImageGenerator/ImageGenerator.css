@@ -262,10 +262,21 @@ body::after {
 .footer-content {
     max-width: 1200px;
     margin: 0 auto;
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 40px;
     margin-bottom: 40px;
+}
+
+.footer-sections-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 40px;
+    margin-bottom: 50px;
+    text-align: center;
+}
+
+.footer-social {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
 }
 
 .footer-section h3 {
@@ -1330,10 +1341,25 @@ body::after {
         font-size: 20px;
     }
     
-    .footer-content {
-        grid-template-columns: 1fr;
+    .footer-top-row {
+        grid-template-columns: repeat(2, 1fr);
         gap: 30px;
         text-align: center;
+    }
+    
+    .footer-middle {
+        text-align: center;
+        margin-bottom: 30px;
+    }
+    
+    .footer-social {
+        justify-content: center;
+    }
+    
+    .social-links {
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 12px;
     }
     
     .app-footer {
@@ -1442,18 +1468,30 @@ body::after {
         height: 50px;
     }
     
-    .app-footer {
-        padding: 30px 15px 15px;
+    .footer-top-row {
+        gap: 20px;
     }
     
-    .footer-section h3 {
-        font-size: 18px;
+    .footer-middle {
+        margin-bottom: 25px;
+    }
+    
+    .social-links {
+        gap: 10px;
     }
     
     .social-links a {
         width: 35px;
         height: 35px;
         font-size: 16px;
+    }
+    
+    .app-footer {
+        padding: 30px 15px 15px;
+    }
+    
+    .footer-section h3 {
+        font-size: 18px;
     }
 }
 

@@ -288,39 +288,41 @@ const ImageGenerator = () => {
       {/* Footer */}
       <footer className="app-footer">
         <div className="footer-content">
-          <div className="footer-section">
-            <h3>AI Image Generator</h3>
-            <p>Create stunning, unique images with the power of artificial intelligence. Transform your imagination into reality with just a few words.</p>
+          <div className="footer-sections-row">
+            <div className="footer-section">
+              <h3>Features</h3>
+              <p><a href="#">High-Quality Images</a></p>
+              <p><a href="#">Fast Generation</a></p>
+              <p><a href="#">Multiple Styles</a></p>
+              <p><a href="#">Free to Use</a></p>
+            </div>
+            
+            <div className="footer-section">
+              <h3>Resources</h3>
+              <p><a href="#">Documentation</a></p>
+              <p><a href="#">API Reference</a></p>
+              <p><a href="#">Tutorials</a></p>
+              <p><a href="#">Community</a></p>
+            </div>
+            
+            <div className="footer-section">
+              <h3>Support</h3>
+              <p><a href="#">Help Center</a></p>
+              <p><a href="#">Contact Us</a></p>
+              <p><a href="#">Bug Reports</a></p>
+              <p><a href="#">Feature Requests</a></p>
+            </div>
+          </div>
+          
+          <div className="footer-social">
             <div className="social-links">
               <a href="#" title="Twitter">🐦</a>
               <a href="#" title="Instagram">📷</a>
               <a href="#" title="GitHub">💻</a>
               <a href="#" title="Discord">💬</a>
+              <a href="#" title="Facebook">📘</a>
+              <a href="#" title="LinkedIn">💼</a>
             </div>
-          </div>
-          
-          <div className="footer-section">
-            <h3>Features</h3>
-            <p><a href="#">High-Quality Images</a></p>
-            <p><a href="#">Fast Generation</a></p>
-            <p><a href="#">Multiple Styles</a></p>
-            <p><a href="#">Free to Use</a></p>
-          </div>
-          
-          <div className="footer-section">
-            <h3>Resources</h3>
-            <p><a href="#">Documentation</a></p>
-            <p><a href="#">API Reference</a></p>
-            <p><a href="#">Tutorials</a></p>
-            <p><a href="#">Community</a></p>
-          </div>
-          
-          <div className="footer-section">
-            <h3>Support</h3>
-            <p><a href="#">Help Center</a></p>
-            <p><a href="#">Contact Us</a></p>
-            <p><a href="#">Bug Reports</a></p>
-            <p><a href="#">Feature Requests</a></p>
           </div>
         </div>
         
