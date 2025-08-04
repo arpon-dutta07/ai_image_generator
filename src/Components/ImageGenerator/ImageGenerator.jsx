@@ -8,9 +8,10 @@ import Contact from '../Contact/Contact';
 
 const ImageGenerator = () => {
 
-  const [image_url, setImage_url] = useState("/")
+  const [image_urls, setImage_urls] = useState(["/", "/", "/", "/"])
   const [loading, setLoading] = useState(false)
   const [currentPrompt, setCurrentPrompt] = useState("")
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   let inputRef = useRef(null);
 
   const generateImage = async () => {
@@ -21,61 +22,93 @@ const ImageGenerator = () => {
     setLoading(true);
     
     try {
-      console.log("Generating image for prompt:", inputRef.current.value);
+      console.log("Generating 4 images for prompt:", inputRef.current.value);
       
-      // Try Pollinations AI (Free, no API key needed)
-      const response = await fetch("https://image.pollinations.ai/prompt/" + encodeURIComponent(inputRef.current.value), {
-        method: "GET",
+      const basePrompt = inputRef.current.value;
+      const variations = [
+        basePrompt,
+        basePrompt + ", artistic style",
+        basePrompt + ", photorealistic",
+        basePrompt + ", digital art style"
+      ];
+      
+      const imagePromises = variations.map(async (prompt, index) => {
+        try {
+          // Add a small delay between requests to avoid overwhelming the API
+          await new Promise(resolve => setTimeout(resolve, index * 500));
+          
+          const response = await fetch("https://image.pollinations.ai/prompt/" + encodeURIComponent(prompt), {
+            method: "GET",
+          });
+
+          if (response.ok) {
+            const blob = await response.blob();
+            if (blob.size > 0) {
+              return URL.createObjectURL(blob);
+            }
+          }
+          return "/"; // Return default if failed
+        } catch (error) {
+          console.error(`Error generating image ${index + 1}:`, error);
+          return "/"; // Return default if failed
+        }
       });
 
-      if (response.ok) {
-        const blob = await response.blob();
-        if (blob.size > 0) {
-          const imageUrl = URL.createObjectURL(blob);
-          setImage_url(imageUrl);
-          setCurrentPrompt(inputRef.current.value);
-          console.log("Image generated successfully with Pollinations AI!");
-          return;
-        }
-      }
-      
-      // If Pollinations fails, show error
-      console.error("Pollinations AI failed:", response.status);
-      alert("Failed to generate image. Please try again with a different prompt.");
+      const generatedImages = await Promise.all(imagePromises);
+      setImage_urls(generatedImages);
+      setCurrentPrompt(inputRef.current.value);
+      console.log("Images generated successfully!");
       
     } catch (error) {
-      console.error("Error generating image:", error);
-      alert(`Failed to generate image: ${error.message}`);
+      console.error("Error generating images:", error);
+      alert(`Failed to generate images: ${error.message}`);
     } finally {
       setLoading(false);
     }
   }
 
-  const downloadImage = async () => {
-    if (image_url === "/" || !image_url) {
-      alert("No image to download! Please generate an image first.");
+  const downloadImage = async (imageIndex = null) => {
+    const hasValidImages = image_urls.some(url => url !== "/");
+    if (!hasValidImages) {
+      alert("No images to download! Please generate images first.");
       return;
     }
 
     try {
-      // Create a temporary link element
-      const link = document.createElement('a');
-      link.href = image_url;
-      
-      // Generate filename with current date and prompt
       const timestamp = new Date().toISOString().slice(0, 19).replace(/:/g, '-');
       const promptText = currentPrompt.slice(0, 30).replace(/[^a-zA-Z0-9]/g, '_');
-      const filename = `ai_image_${promptText}_${timestamp}.png`;
       
-      link.download = filename;
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
+      if (imageIndex !== null) {
+        // Download specific image
+        const imageUrl = image_urls[imageIndex];
+        if (imageUrl !== "/") {
+          const link = document.createElement('a');
+          link.href = imageUrl;
+          link.download = `ai_image_${promptText}_${imageIndex + 1}_${timestamp}.png`;
+          document.body.appendChild(link);
+          link.click();
+          document.body.removeChild(link);
+        }
+      } else {
+        // Download all valid images
+        image_urls.forEach((imageUrl, index) => {
+          if (imageUrl !== "/") {
+            setTimeout(() => {
+              const link = document.createElement('a');
+              link.href = imageUrl;
+              link.download = `ai_image_${promptText}_${index + 1}_${timestamp}.png`;
+              document.body.appendChild(link);
+              link.click();
+              document.body.removeChild(link);
+            }, index * 500); // Stagger downloads
+          }
+        });
+      }
       
-      console.log("Image downloaded successfully!");
+      console.log("Images downloaded successfully!");
     } catch (error) {
-      console.error("Error downloading image:", error);
-      alert("Failed to download image. Please try again.");
+      console.error("Error downloading images:", error);
+      alert("Failed to download images. Please try again.");
     }
   }
 
@@ -85,12 +118,35 @@ const ImageGenerator = () => {
       {/* Header */}
       <header className="app-header">
         <div className="logo">✨ AI Studio</div>
-        <nav>
+        <nav className="desktop-nav">
           <ul className="nav-links">
             <li><a href="#home" onClick={(e) => {e.preventDefault(); window.scrollTo({top: 0, behavior: 'smooth'});}}>Home</a></li>
             <li><a href="#gallery" onClick={(e) => {e.preventDefault(); document.getElementById('gallery').scrollIntoView({behavior: 'smooth'});}}>Gallery</a></li>
             <li><a href="#about" onClick={(e) => {e.preventDefault(); document.getElementById('about').scrollIntoView({behavior: 'smooth'});}}>About</a></li>
             <li><a href="#contact" onClick={(e) => {e.preventDefault(); document.getElementById('contact').scrollIntoView({behavior: 'smooth'});}}>Contact</a></li>
+          </ul>
+        </nav>
+        
+        {/* Mobile Menu Button */}
+        <button 
+          className="mobile-menu-btn"
+          onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+          aria-label="Toggle mobile menu"
+        >
+          <span className={`hamburger ${mobileMenuOpen ? 'open' : ''}`}>
+            <span></span>
+            <span></span>
+            <span></span>
+          </span>
+        </button>
+        
+        {/* Mobile Menu */}
+        <nav className={`mobile-nav ${mobileMenuOpen ? 'open' : ''}`}>
+          <ul className="mobile-nav-links">
+            <li><a href="#home" onClick={(e) => {e.preventDefault(); window.scrollTo({top: 0, behavior: 'smooth'}); setMobileMenuOpen(false);}}>Home</a></li>
+            <li><a href="#gallery" onClick={(e) => {e.preventDefault(); document.getElementById('gallery').scrollIntoView({behavior: 'smooth'}); setMobileMenuOpen(false);}}>Gallery</a></li>
+            <li><a href="#about" onClick={(e) => {e.preventDefault(); document.getElementById('about').scrollIntoView({behavior: 'smooth'}); setMobileMenuOpen(false);}}>About</a></li>
+            <li><a href="#contact" onClick={(e) => {e.preventDefault(); document.getElementById('contact').scrollIntoView({behavior: 'smooth'}); setMobileMenuOpen(false);}}>Contact</a></li>
           </ul>
         </nav>
       </header>
@@ -127,13 +183,39 @@ const ImageGenerator = () => {
       {/* Main Generator Section */}
       <div className='ai-image-generator'>
         <div className='img-loading'>
-          <div className='image'> 
-            <img 
-              src={image_url === "/" ? default_image : image_url} 
-              alt={image_url === "/" ? "Default placeholder" : "Generated AI image"} 
-            />
-            <div className="shimmer"></div>
-            {loading && <div className="loading">Generating your masterpiece...</div>}
+          <div className='images-grid'>
+            {image_urls.map((image_url, index) => (
+              <div key={index} className='image'> 
+                <img 
+                  src={image_url === "/" ? "/favicon-32x32.png" : image_url} 
+                  alt={image_url === "/" ? "Click generate to create AI image" : `Generated AI image ${index + 1}`}
+                  onError={(e) => {
+                    if (image_url === "/" && e.target.src.includes('favicon-32x32.png')) {
+                      e.target.src = default_image;
+                    }
+                  }}
+                />
+                <div className="shimmer"></div>
+                {loading && (
+                  <div className="loading">
+                    <div className="loading-spinner"></div>
+                    <div className="loading-text">Creating masterpiece {index + 1}...</div>
+                    <div className="loading-progress">
+                      <div className="progress-bar" style={{animationDelay: `${index * 0.5}s`}}></div>
+                    </div>
+                  </div>
+                )}
+                {!loading && image_url !== "/" && (
+                  <button 
+                    className="download-individual-btn"
+                    onClick={() => downloadImage(index)}
+                    title={`Download Image ${index + 1}`}
+                  >
+                    ⬇️
+                  </button>
+                )}
+              </div>
+            ))}
           </div>
         </div>
         
@@ -164,16 +246,16 @@ const ImageGenerator = () => {
             
             <button 
               className='download-btn' 
-              onClick={downloadImage}
-              disabled={image_url === "/" || loading}
-              title="Download Image"
+              onClick={() => downloadImage()}
+              disabled={!image_urls.some(url => url !== "/") || loading}
+              title="Download All Images"
             >
-              ⬇️
+              📥
             </button>
           </div>
         </div>
         
-        {image_url !== "/" && (
+        {image_urls.some(url => url !== "/") && (
           <div style={{
             color: 'rgba(255, 255, 255, 0.8)', 
             fontSize: '16px', 
@@ -188,6 +270,13 @@ const ImageGenerator = () => {
             animation: 'fadeInUp 0.8s ease-out'
           }}>
             💭 "{currentPrompt}"
+            <div style={{
+              marginTop: '10px',
+              fontSize: '14px',
+              color: 'rgba(255, 255, 255, 0.6)'
+            }}>
+              4 unique variations generated
+            </div>
           </div>
         )}
       </div>
