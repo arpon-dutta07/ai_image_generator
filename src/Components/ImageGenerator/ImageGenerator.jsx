@@ -315,13 +315,14 @@ const ImageGenerator = () => {
           </div>
           
           <div className="footer-social">
+            <h3 className="follow-us-title">Follow Us</h3>
             <div className="social-links">
-              <a href="#" title="Twitter">🐦</a>
-              <a href="#" title="Instagram">📷</a>
-              <a href="#" title="GitHub">💻</a>
-              <a href="#" title="Discord">💬</a>
-              <a href="#" title="Facebook">📘</a>
-              <a href="#" title="LinkedIn">💼</a>
+              <a href="#" title="Twitter" aria-label="Follow us on Twitter">🐦</a>
+              <a href="#" title="Instagram" aria-label="Follow us on Instagram">📷</a>
+              <a href="#" title="GitHub" aria-label="Follow us on GitHub">💻</a>
+              <a href="#" title="Discord" aria-label="Join our Discord">💬</a>
+              <a href="#" title="Facebook" aria-label="Follow us on Facebook">📘</a>
+              <a href="#" title="LinkedIn" aria-label="Follow us on LinkedIn">💼</a>
             </div>
           </div>
         </div>
