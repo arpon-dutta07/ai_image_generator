@@ -686,13 +686,7 @@ body::after {
     z-index: 1;
 }
 
-/* Favicon placeholder styling */
-.image img[src*="favicon"] {
-    object-fit: contain;
-    padding: 80px;
-    opacity: 0.6;
-    filter: brightness(1.5) contrast(1.2);
-}
+
 
 .image:hover img {
     transform: scale(1.05) rotate(1deg);
@@ -1272,13 +1266,14 @@ body::after {
     }
     
     .images-grid {
-        grid-template-columns: 1fr;
-        gap: 20px;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 15px;
         padding: 0 10px;
+        max-width: 500px;
     }
     
     .image img {
-        height: 250px;
+        height: 180px;
     }
     
     .hero-section {
@@ -1295,11 +1290,11 @@ body::after {
     }
     
     .download-individual-btn {
-        width: 35px;
-        height: 35px;
-        font-size: 14px;
-        top: 8px;
-        right: 8px;
+        width: 30px;
+        height: 30px;
+        font-size: 12px;
+        top: 5px;
+        right: 5px;
     }
     
     .search-box {
@@ -1376,13 +1371,14 @@ body::after {
     }
     
     .images-grid {
-        grid-template-columns: 1fr;
-        gap: 15px;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
         padding: 0 5px;
+        max-width: 400px;
     }
     
     .image img {
-        height: 200px;
+        height: 150px;
     }
     
     .hero-section {

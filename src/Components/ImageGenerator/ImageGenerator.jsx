@@ -187,13 +187,8 @@ const ImageGenerator = () => {
             {image_urls.map((image_url, index) => (
               <div key={index} className='image'> 
                 <img 
-                  src={image_url === "/" ? "/favicon-32x32.png" : image_url} 
+                  src={image_url === "/" ? default_image : image_url} 
                   alt={image_url === "/" ? "Click generate to create AI image" : `Generated AI image ${index + 1}`}
-                  onError={(e) => {
-                    if (image_url === "/" && e.target.src.includes('favicon-32x32.png')) {
-                      e.target.src = default_image;
-                    }
-                  }}
                 />
                 <div className="shimmer"></div>
                 {loading && (
