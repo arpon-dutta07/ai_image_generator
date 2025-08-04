@@ -245,26 +245,7 @@ const Contact = () => {
           </div>
         </div>
 
-        {/* Social Links */}
-        <div className={`social-section ${isVisible ? 'animate' : ''}`}>
-          <h3 className="social-title">Follow Us</h3>
-          <p className="social-subtitle">Stay connected and get the latest updates</p>
-          <div className="social-links">
-            {socialLinks.map((social, index) => (
-              <a
-                key={index}
-                href={social.url}
-                className="social-link"
-                style={{ animationDelay: `${index * 0.1}s` }}
-                title={social.name}
-              >
-                <span className="social-icon">{social.icon}</span>
-                <span className="social-name">{social.name}</span>
-                <div className="social-glow" style={{ background: social.color }}></div>
-              </a>
-            ))}
-          </div>
-        </div>
+
 
         {/* FAQ Section */}
         <div className={`faq-section ${isVisible ? 'animate' : ''}`}>
